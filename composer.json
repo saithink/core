@@ -14,6 +14,13 @@
 		  "saithink\\core\\": "src"
 		}
 	},
+    "extra": {
+      "think": {
+        "services": [
+          "saithink\\core\\Service"
+        ]
+      }
+    },
     "minimum-stability": "dev",
     "require": {}
 }

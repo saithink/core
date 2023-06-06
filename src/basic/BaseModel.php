@@ -24,6 +24,6 @@ class BaseModel extends Model
     // 更新时间
     protected $updateTime = 'update_time';
     // 隐藏字段
-    protected $hidden = ['update_time','delete_time'];
+    protected $hidden = ['update_time', 'delete_time'];
 
 }
