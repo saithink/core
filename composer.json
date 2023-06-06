@@ -1,0 +1,19 @@
+{
+    "name": "saithink/core",
+    "description": "saithink framework",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "saithink",
+            "email": "gogo2018_tech@163.com"
+        }
+    ],
+	"autoload": {
+		"psr-4": {
+		  "saithink\\core\\": "src"
+		}
+	},
+    "minimum-stability": "dev",
+    "require": {}
+}
