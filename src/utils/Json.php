@@ -8,6 +8,7 @@ namespace saithink\core\utils;
 
 use think\exception\HttpResponseException;
 use think\Response;
+use think\facade\Request;
 
 /**
  * Json输出类
@@ -20,7 +21,8 @@ class Json
 
     public function make(int $code, string $msg, ?array $data = null): Response
     {
-        $res = compact('code', 'msg');
+        $request_url = Request::baseUrl();
+        $res = compact('code', 'msg', 'request_url');
         if (!is_null($data))
             $res['data'] = $data;
         return Response::create($res, 'json', $this->code);

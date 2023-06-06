@@ -81,8 +81,8 @@ class BaseLogic
         if (isset($attach['order'])) {
             $model = $model->order($attach['order']);
         }
-        $list = $model->select();
-        return compact('list');
+        $data = $model->select();
+        return compact('data');
     }
 
     /**
@@ -108,7 +108,7 @@ class BaseLogic
         if (isset($attach['order'])) {
             $model = $model->order($attach['order']);
         }
-        return $model->paginate($limit, false, ['page' => $page]);
+        return $model->paginate($limit, false, ['page' => $page])->toArray();
     }
 
     /**
