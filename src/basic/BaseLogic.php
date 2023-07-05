@@ -21,7 +21,6 @@ use think\Db;
  * @method static min($data) think-orm的min方法
  * @method static sum($data) think-orm的sum方法
  * @method static avg($data) think-orm的avg方法
- * @method static fetchSql() think-orm的fetchSql方法
  */
 class BaseLogic
 {
@@ -40,6 +39,15 @@ class BaseLogic
     public function transaction(callable $closure, bool $isTran = true): mixed
     {
         return $isTran ? Db::transaction($closure) : $closure();
+    }
+
+    /**
+     * 获取当前模型
+     * @return object
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**
@@ -63,12 +71,15 @@ class BaseLogic
     /**
      * 查询全部数据
      * @param $searchWhere 搜索器
-     * @param $attach with|field|where|order
+     * @param $attach join|with|field|where|order
      * @return array
      */
     public function getAll($searchWhere = [], $attach = [])
     {
         $model = $this->search($searchWhere);
+        if (isset($attach['join'])) {
+            $model = $model->alias('a')->join($attach['join']);
+        }
         if (isset($attach['with'])) {
             $model = $model->with($attach['with']);
         }
@@ -81,14 +92,14 @@ class BaseLogic
         if (isset($attach['order'])) {
             $model = $model->order($attach['order']);
         }
-        $data = $model->select();
+        $data = $model->select()->toArray();
         return compact('data');
     }
 
     /**
      * 分页查询数据
      * @param $searchWhere 搜索器
-     * @param $attach with|field|where|order
+     * @param $attach join|with|field|where|order
      * @return mixed
      */
     public function getList($searchWhere = [], $attach = [])
@@ -96,6 +107,9 @@ class BaseLogic
         $page = input('page') ? input('page') : 1;
         $limit = input('limit') ? input('limit') : 20;
         $model = $this->search($searchWhere);
+        if (isset($attach['join'])) {
+            $model = $model->alias('a')->join($attach['join']);
+        }
         if (isset($attach['with'])) {
             $model = $model->with($attach['with']);
         }

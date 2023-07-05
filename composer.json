@@ -18,7 +18,10 @@
       "think": {
         "services": [
           "saithink\\core\\Service"
-        ]
+        ],
+        "config": {
+          "saithink": "src/config.php"
+        }
       }
     },
     "minimum-stability": "dev",
