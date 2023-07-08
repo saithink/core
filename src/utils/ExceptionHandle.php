@@ -47,7 +47,7 @@ class ExceptionHandle extends Handle
         if ($e instanceof ApiException) {
             return app('json')->fail($e->getMessage(), $massageData);
         } else {
-            return app('json')->make(500, $e->getMessage(), $massageData);
+            return app('json')->make(400, $e->getMessage(), $massageData);
         }
     }
 

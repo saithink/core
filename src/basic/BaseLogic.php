@@ -11,10 +11,12 @@ use think\Db;
 /**
  * 逻辑层基础类
  * @package app\service
+ * @method static find($id) think-orm的find方法
  * @method static save($data) think-orm的save方法
  * @method static create($data) think-orm的create方法
  * @method static saveAll($data) think-orm的saveAll方法
- * @method static update($data) think-orm的update方法
+ * @method static update($data, $where) think-orm的update方法
+ * @method static destroy($id) think-orm的destroy方法
  * @method static select($data) think-orm的select方法
  * @method static count($data) think-orm的count方法
  * @method static max($data) think-orm的max方法
@@ -92,6 +94,9 @@ class BaseLogic
         if (isset($attach['order'])) {
             $model = $model->order($attach['order']);
         }
+        if (isset($attach['hidden'])) {
+            $model = $model->hidden($attach['hidden']);
+        }
         $data = $model->select()->toArray();
         return compact('data');
     }
@@ -121,6 +126,9 @@ class BaseLogic
         }
         if (isset($attach['order'])) {
             $model = $model->order($attach['order']);
+        }
+        if (isset($attach['hidden'])) {
+            $model = $model->hidden($attach['hidden']);
         }
         return $model->paginate($limit, false, ['page' => $page])->toArray();
     }

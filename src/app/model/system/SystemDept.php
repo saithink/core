@@ -7,30 +7,27 @@
 namespace saithink\core\app\model\system;
 
 use saithink\core\basic\BaseModel;
-
 /**
- * 系统管理员模型
+ * 部门模型
+ * Class SystemDept
+ * @package app\model
  */
-class SystemAdmin extends BaseModel
+class SystemDept extends BaseModel
 {
-    // 完整数据库表名称
-    protected $table  = 'eb_system_admin';
-    // 主键
+    /**
+     * 数据表主键
+     * @var string
+     */
     protected $pk = 'id';
 
-    /**
-     * 权限字段处理
-     */
-    public static function getRolesAttr($value)
-    {
-        return explode(',', $value);
-    }
+    protected $table = 'eb_system_dept';
 
     /**
      * 关键字搜索
      */
     public function searchKeywordsAttr($query, $value)
     {
-        $query->where('account|real_name|phone', 'LIKE', "%$value%");
+        $query->where('dept_name|leader|phone', 'LIKE', "%$value%");
     }
+
 }

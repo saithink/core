@@ -50,7 +50,7 @@ class SystemToken
                 return $result;
             });
         } catch (\Exception $e) {
-            throw new ApiException('您的登录凭证错误或者已过期，请重新登录');
+            throw new ApiException('您的登录凭证错误或者已过期，请重新登录', 401);
         }
         return $next($request);
     }

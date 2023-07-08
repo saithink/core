@@ -9,28 +9,20 @@ namespace saithink\core\app\model\system;
 use saithink\core\basic\BaseModel;
 
 /**
- * 系统管理员模型
+ * 菜单模型
  */
-class SystemAdmin extends BaseModel
+class SystemMenu extends BaseModel
 {
     // 完整数据库表名称
-    protected $table  = 'eb_system_admin';
+    protected $table  = 'eb_system_menu';
     // 主键
     protected $pk = 'id';
 
     /**
-     * 权限字段处理
+     * Id搜索
      */
-    public static function getRolesAttr($value)
+    public function searchIdAttr($query, $value)
     {
-        return explode(',', $value);
-    }
-
-    /**
-     * 关键字搜索
-     */
-    public function searchKeywordsAttr($query, $value)
-    {
-        $query->where('account|real_name|phone', 'LIKE', "%$value%");
+        $query->whereIn('id', $value);
     }
 }

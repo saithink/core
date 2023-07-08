@@ -7,6 +7,9 @@
 namespace saithink\core\basic;
 
 use think\App;
+use think\facade\Config;
+use saithink\core\exception\ApiException;
+use saithink\core\app\logic\system\SystemMenuLogic;
 
 /**
  * 基类 控制器继承此类
@@ -60,6 +63,32 @@ class BaseController
         $this->adminId = $this->request->adminId();
         $this->adminName = $this->request->adminName();
         $this->adminInfo = $this->request->adminInfo();
+        // 接口权限认证
+        $server_auth = Config::get('saithink.server_auth', false);
+        if ($server_auth) {
+            $this->checkAuth();
+        }
+    }
+
+    /**
+     * 接口权限认证
+     */
+    protected function checkAuth()
+    {
+        // 接口请求权限判断
+        $rule = trim(strtolower($this->request->rule()->getRule()));
+        $method = trim(strtoupper($this->request->method()));
+        // 当前请求 接口权限
+        $auth = $method . ' ' . $rule;
+        $logic = new SystemMenuLogic();
+        $btns = $logic->getAllBtns();
+        if (in_array($auth, $btns)) {
+            // 请求接口有权限配置则进行验证
+            $allowBtns = $logic->getBtns($this->adminInfo['roles'], $this->adminInfo['level']);
+            if (!in_array($auth, $allowBtns)) {
+                throw new ApiException('您没有权限进行访问');
+            }
+        }
     }
 
 }

@@ -5,6 +5,25 @@
 // | Author: sai <1430792918@qq.com>
 // +----------------------------------------------------------------------
 return [
+    // 跨域配置
+    'cross' => [
+        // 跨域header
+        'header'    => [
+            'Access-Control-Allow-Origin'       => '*',
+            'Access-Control-Allow-Headers'      => 'Authorization, Authori-zation, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With, Form-type',
+            'Access-Control-Allow-Methods'      => 'GET,POST,PATCH,PUT,DELETE,OPTIONS,DELETE',
+            'Access-Control-Max-Age'            =>  '1728000',
+            'Access-Control-Allow-Credentials'  => 'true'
+        ],
+        // token名称
+        'token_name' => 'Authori-zation',
+    ],
+    // 中间件白名单
+    'white_list' => [
+        '/index/token',
+        '/core/captcha',
+        '/core/login',
+    ],
     // 文件上传配置
     'upload' => [
         //上传文件大小

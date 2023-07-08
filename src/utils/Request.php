@@ -43,4 +43,5 @@ class Request extends \think\Request
         }
         return $p;
     }
+
 }
