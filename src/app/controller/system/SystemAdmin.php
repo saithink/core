@@ -32,9 +32,10 @@ class SystemAdmin extends BaseController
     public function index()
     {
         $where = $this->request->more([
-            ['keywords', '']
+            ['keywords', ''],
+            ['dept_id', 0],
         ]);
-        $data = $this->logic->getList($where, ['hidden' => ['pwd', 'delete_time']]);
+        $data = $this->logic->getList($where, ['with' => ['dept'],'hidden' => ['pwd', 'delete_time']]);
         return $this->app['json']->success($data);
     }
 
@@ -113,4 +114,5 @@ class SystemAdmin extends BaseController
             return $this->app['json']->fail('参数错误，请检查');
         }
     }
+
 }

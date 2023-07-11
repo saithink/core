@@ -16,18 +16,28 @@ class Service extends TpService
 
     public function boot()
     {
-        // 服务启动
-        Route::get("/core/captcha","\\saithink\\core\\app\\controller\\Login@captcha");
-        Route::post("/core/login","\\saithink\\core\\app\\controller\\Login@login");
+        Route::group('core', function () {
 
-        Route::get("/core/system/menu","\\saithink\\core\\app\\controller\\System@menus");
-        Route::get("/core/system/user","\\saithink\\core\\app\\controller\\System@userInfo");
+            Route::get("captcha","\\saithink\\core\\app\\controller\\Login@captcha");
+            Route::post("login","\\saithink\\core\\app\\controller\\Login@login");
 
-        Route::resource("/core/menu", "\\saithink\\core\\app\\controller\\system\\SystemMenu");
-        Route::resource("/core/admin", "\\saithink\\core\\app\\controller\\system\\SystemAdmin");
-        Route::resource("/core/dept", "\\saithink\\core\\app\\controller\\system\\SystemDept");
-        Route::resource("/core/role", "\\saithink\\core\\app\\controller\\system\\SystemRole");
-        Route::resource("/core/dict", "\\saithink\\core\\app\\controller\\system\\SystemDict");
-        Route::resource("/core/dicd", "\\saithink\\core\\app\\controller\\system\\SystemDicd");
+            Route::get("system/menu","\\saithink\\core\\app\\controller\\System@menus");
+            Route::get("system/user","\\saithink\\core\\app\\controller\\System@userInfo");
+            Route::post("system/modifyUser","\\saithink\\core\\app\\controller\\System@modifyUser");
+            Route::post("system/modifyPwd","\\saithink\\core\\app\\controller\\System@modifyPwd");
+
+            Route::get("log","\\saithink\\core\\app\\controller\\system\\SystemLog@index");
+            Route::resource("menu", "\\saithink\\core\\app\\controller\\system\\SystemMenu");
+            Route::resource("admin", "\\saithink\\core\\app\\controller\\system\\SystemAdmin");
+            Route::resource("dept", "\\saithink\\core\\app\\controller\\system\\SystemDept");
+            Route::resource("role", "\\saithink\\core\\app\\controller\\system\\SystemRole");
+            Route::resource("dict", "\\saithink\\core\\app\\controller\\system\\SystemDict");
+            Route::resource("dicd", "\\saithink\\core\\app\\controller\\system\\SystemDicd");
+
+        })->middleware([
+            \saithink\core\middleware\SystemToken::class,
+            \saithink\core\middleware\SystemLog::class,
+        ]);
+
     }
 }

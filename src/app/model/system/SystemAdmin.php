@@ -18,12 +18,27 @@ class SystemAdmin extends BaseModel
     // 主键
     protected $pk = 'id';
 
+    public function dept()
+    {
+        return $this->belongsTo(SystemDept::class, 'dept_id', 'id')->bind(['dept_name']);
+    }
+
     /**
      * 权限字段处理
      */
     public static function getRolesAttr($value)
     {
         return explode(',', $value);
+    }
+
+    /**
+     * 部门编号查询
+     */
+    public function searchDeptIdAttr($query, $value)
+    {
+        if ($value > 0) {
+            $query->where('dept_id', $value);
+        }
     }
 
     /**

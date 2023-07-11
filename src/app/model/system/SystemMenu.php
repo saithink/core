@@ -25,4 +25,12 @@ class SystemMenu extends BaseModel
     {
         $query->whereIn('id', $value);
     }
+
+    /**
+     * 关键字搜索
+     */
+    public function searchKeywordsAttr($query, $value)
+    {
+        $query->where('title', 'LIKE', "%$value%");
+    }
 }
